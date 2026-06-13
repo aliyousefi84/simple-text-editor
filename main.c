@@ -12,6 +12,5 @@ int main (int argc , char **argv) {
     struct terminal_state *terminal = initialize (f);
     read_file_from_arguman (f);
     terminal_main_loop (terminal);
-    clean_up_file (f);
     
 }

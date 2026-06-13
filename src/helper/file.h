@@ -12,17 +12,31 @@ struct file_handler
 {
     char* path;
     
+    size_t capacity;
+
     char* buf;
 
+    size_t size;
+
+    int cursor_pos;
 };
+
+
 
 struct file_handler* init_file_handler (char *filepath);
 
+
 void read_file_from_arguman (struct file_handler* f);
 
-size_t get_file_size (struct file_handler* f);
 
-void save_file (struct file_handler* f, char* buffer);
+void save_file (struct file_handler* f);
+
+
+void editor_insert (struct file_handler* f,char ch);
+
+
+void editor_backspace (struct file_handler* f);
+
 
 void clean_up_file (struct file_handler* f);
 

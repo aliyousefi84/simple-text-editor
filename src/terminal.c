@@ -30,27 +30,32 @@ void terminal_main_loop (struct terminal_state* t) {
     while (read (STDIN_FILENO , &t->terminal_raw_byte ,1) == 1)
     {
         
-        if (t->terminal_raw_byte == '\033') break;
+        if (t->terminal_raw_byte == 4) break;
+        if (t->terminal_raw_byte == 27) {
+            // \033[A   |
+            char seq[2];
+            read (STDIN_FILENO,seq,2);
+            if (seq[0] == '[' && seq[1] == 'D') {
+                write (STDOUT_FILENO , "\b" , 1);
+            };
 
+        }
         if (t->terminal_raw_byte == 10) {
+            editor_insert (t->file , t->terminal_raw_byte);
             write (STDOUT_FILENO,"\n\r",2);
-            t->add_char[count] = t->terminal_raw_byte;
-            count++;
         }
         if (t->terminal_raw_byte == 127) {
-            write (STDOUT_FILENO,"\b \b" , 3);
-            
-            
+            editor_backspace (t->file);
+            write (STDOUT_FILENO,"\b \b" , 3);            
         } 
 
         if (t->terminal_raw_byte > 27 && t->terminal_raw_byte < 127)
         {
+            editor_insert (t->file , t->terminal_raw_byte);
             write (STDOUT_FILENO , &t->terminal_raw_byte , 1);
-            t->add_char[count] = t->terminal_raw_byte;
-            count++;
         }          
         if (t->terminal_raw_byte == 24) {
-            save_file (t->file , t->add_char);
+            save_file (t->file);
         };
     }
 

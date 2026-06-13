@@ -15,8 +15,6 @@ struct terminal_state {
 
     char* add_char;
 
-    char** line;
-
     struct file_handler* file;
 
     
