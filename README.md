@@ -33,5 +33,5 @@ A minimalist terminal-based text editor written in C, using raw `termios` contro
 ## Build & Run
 
 ```bash
-gcc -o editor src/*.c -I.
+make
 ./editor <filename>
