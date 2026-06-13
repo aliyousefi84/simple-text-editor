@@ -26,7 +26,6 @@ void clear_page () {
 };
 
 void terminal_main_loop (struct terminal_state* t) {
-    int count = 0;
     while (read (STDIN_FILENO , &t->terminal_raw_byte ,1) == 1)
     {
         
