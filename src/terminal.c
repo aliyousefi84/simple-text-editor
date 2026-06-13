@@ -32,13 +32,20 @@ void terminal_main_loop (struct terminal_state* t) {
         
         if (t->terminal_raw_byte == 4) break;
         if (t->terminal_raw_byte == 27) {
-            // \033[A   |
+            // \033[A   
             char seq[2];
             read (STDIN_FILENO,seq,2);
             if (seq[0] == '[' && seq[1] == 'D') {
                 write (STDOUT_FILENO , "\b" , 1);
             };
+            if (seq[0] == '[' && seq[1] == 'A') {
+               // write (STDOUT_FILENO , "")
+            };
 
+        }
+        if (t->terminal_raw_byte == 32) {
+            editor_insert (t->file , t->terminal_raw_byte);
+            write (STDOUT_FILENO , &t->terminal_raw_byte , 1);
         }
         if (t->terminal_raw_byte == 10) {
             editor_insert (t->file , t->terminal_raw_byte);

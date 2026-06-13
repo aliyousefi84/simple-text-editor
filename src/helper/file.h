@@ -40,4 +40,7 @@ void editor_backspace (struct file_handler* f);
 
 void clean_up_file (struct file_handler* f);
 
+
+
+
 #endif
